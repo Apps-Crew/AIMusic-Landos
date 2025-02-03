@@ -3,10 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Single Page Site</title>
+  <title>Shoom AI</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
   <link rel="stylesheet" href="styles.css" />
+  <!-- Load Appsflyer's Smart Script from their CDN -->
+  <script src="https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js"></script>
 </head>
 <body>
   <img src="images/landos.png" alt="My Image" />
+
+  <script>
+    // Wait until the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.addEventListener('click', function(event) {
+        console.log('Page was clicked!');
+        runYourCustomScript();
+      });
+    });
+
+    function runYourCustomScript() {
+      console.log('Custom script is running!');
+
+      // Define your OneLink URL and parameters
+      var oneLinkURL = "https://shoomaisong.onelink.me/ccUU";
+      var mediaSource = { keys: ["pid"], defaultValue: "metaweb_int" };
+      var ad = { keys: ["af_ad"], defaultValue: "%7B%7Bad.name%7D%7D" };
+      var adSet = { keys: ["af_adset"], defaultValue: "%7B%7Badset.name%7D%7D" };
+      var campaign = { keys: ["c"], defaultValue: "%7B%7Bcampaign.name%7D%7D" };
+      var af_siteid = { paramKey: "af_siteid", keys: ["af_siteid"], defaultValue: "%7B%7Bsite_source_name%7D%7D" };
+      var af_adset_id = { paramKey: "af_adset_id", keys: ["af_adset_id"], defaultValue: "%7B%7Badset.id%7D%7D" };
+      var af_ad_id = { paramKey: "af_ad_id", keys: ["af_ad_id"], defaultValue: "%7B%7Bad.id%7D%7D" };
+      var afSub1 = { keys: ["fbclid"] };
+      var custom_ss_ui = { paramKey: "af_ss_ui", defaultValue: "true" };
+
+      // Generate the OneLink URL using the Appsflyer Smart Script function.
+      var result = window.AF_SMART_SCRIPT.generateOneLinkURL({
+          oneLinkURL: oneLinkURL,
+          afParameters: {
+              mediaSource: mediaSource,
+              ad: ad,
+              adSet: adSet,
+              campaign: campaign,
+              afCustom: [
+                  af_siteid,
+                  af_adset_id,
+                  af_ad_id,
+                  custom_ss_ui
+              ],
+              afSub1: afSub1
+          },
+          // Optionally you can provide referrerSkipList, urlSkipList, and webReferrer parameters:
+          referrerSkipList: [],
+          urlSkipList: []
+      });
+
+      if(result && result.clickURL) {
+          console.log("Generated OneLink URL:", result.clickURL);
+          // For example, redirect the user to the generated URL:
+          window.location.href = result.clickURL;
+          // Or, if you prefer to update a CTA element, you can do so here.
+      } else {
+          console.error("Error generating the OneLink URL");
+      }
+    }
+  </script>
 </body>
 </html>
