@@ -1,9 +1,28 @@
+/* Apply a black background and use flexbox to center content */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    background-color: black;
+    margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the body full viewport height */
   }
-  h1 {
-    color: #333;
+  
+  /* Base style for the image */
+  img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100vh; /* Ensure the image does not exceed viewport height */
+  }
+  
+  /* For mobile devices: Make the image fill the screen width */
+  @media (max-width: 768px) {
+    img {
+      width: 100%;
+      height: auto; /* Maintain aspect ratio */
+      max-height: none; /* Let the image scale based solely on width */
+    }
   }
